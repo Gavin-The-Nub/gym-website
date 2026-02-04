@@ -1,41 +1,13 @@
-import Image from "next/image";
 import Link from "next/link";
+import Navbar from "./components/Navbar";
+import { StaggerContainer, StaggerItem } from "./components/StaggeredFadeIn";
 
 export default function Home() {
   return (
     <div className="min-h-screen bg-[#0A0A0A]">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 transition-all duration-300">
-        <div className="container mx-auto px-6 py-4">
-          <div className="glass-card flex items-center justify-between px-6 py-3">
-            {/* Logo */}
-            <a href="#" className="flex items-center">
-              <Image
-                src="/images/logo.png"
-                alt="Golden 8 Fitness Gym"
-                width={140}
-                height={50}
-                className="h-10 w-auto"
-                priority
-              />
-            </a>
-
-            {/* Desktop Menu */}
-            <div className="hidden md:flex items-center gap-8">
-              <a href="#about" className="text-gray-300 hover:text-[#FFD700] transition-colors">About</a>
-              <a href="#programs" className="text-gray-300 hover:text-[#FFD700] transition-colors">Programs</a>
-              <a href="#pricing" className="text-gray-300 hover:text-[#FFD700] transition-colors">Pricing</a>
-              <a href="#trainers" className="text-gray-300 hover:text-[#FFD700] transition-colors">Trainers</a>
-              <a href="#contact" className="text-gray-300 hover:text-[#FFD700] transition-colors">Contact</a>
-            </div>
-
-            {/* CTA Button */}
-            <a href="#pricing" className="btn-primary text-sm py-2 px-5">
-              Join Now
-            </a>
-          </div>
-        </div>
-      </nav>
+      {/* Navigation */}
+      <Navbar />
 
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
@@ -91,19 +63,19 @@ export default function Home() {
       {/* Stats Section */}
       <section className="py-16 bg-[#1A1A1A] border-y border-[#2A2A2A]">
         <div className="container mx-auto px-6">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <StaggerContainer className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {[
               { number: "5000+", label: "Active Members" },
               { number: "50+", label: "Expert Trainers" },
               { number: "15+", label: "Years Experience" },
               { number: "100%", label: "Satisfaction Rate" },
             ].map((stat, index) => (
-              <div key={index} className="text-center">
+              <StaggerItem key={index} className="text-center">
                 <div className="text-4xl md:text-5xl font-bold gradient-text mb-2">{stat.number}</div>
                 <div className="text-gray-400">{stat.label}</div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -134,23 +106,23 @@ export default function Home() {
               <p className="text-gray-400 text-lg mb-8 leading-relaxed">
                 With premium equipment, expert trainers, and a supportive community, we provide everything you need to transform your body and elevate your life.
               </p>
-              <ul className="space-y-4 mb-8">
+              <StaggerContainer className="space-y-4 mb-8">
                 {[
                   "State-of-the-art equipment",
                   "Personal training sessions",
                   "Group fitness classes",
                   "Nutrition guidance",
                 ].map((item, index) => (
-                  <li key={index} className="flex items-center gap-3">
+                  <StaggerItem key={index} className="flex items-center gap-3">
                     <div className="w-6 h-6 rounded-full bg-[#FFD700]/20 flex items-center justify-center">
                       <svg className="w-4 h-4 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
                         <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                       </svg>
                     </div>
                     <span className="text-white">{item}</span>
-                  </li>
+                  </StaggerItem>
                 ))}
-              </ul>
+              </StaggerContainer>
               <a href="#contact" className="btn-primary">
                 Get Started Today
               </a>
@@ -167,7 +139,7 @@ export default function Home() {
           </h2>
         </div>
         {/* Programs Grid - Full Width */}
-        <div className="grid md:grid-cols-3 gap-2 px-2">
+        <StaggerContainer className="grid md:grid-cols-3 gap-2 px-2">
           {[
             {
               slug: "personal-training",
@@ -185,23 +157,29 @@ export default function Home() {
               image: "/img4.jpg",
             },
           ].map((program, index) => (
-            <Link
-              key={index}
-              href={`/programs/${program.slug}`}
-              className="group block"
-            >
-              <div className="relative overflow-hidden rounded-lg hover-lift">
-                <Image
-                  src={program.image}
-                  alt={program.title}
-                  width={1080}
-                  height={1080}
-                  className="object-cover w-full aspect-square group-hover:scale-105 transition-transform duration-500"
-                />
-              </div>
-            </Link>
+            <StaggerItem key={index}>
+              <Link
+                href={`/programs/${program.slug}`}
+                className="group block"
+              >
+                <div className="relative overflow-hidden rounded-lg hover-lift">
+                  <Image
+                    src={program.image}
+                    alt={program.title}
+                    width={1080}
+                    height={1080}
+                    className="object-cover w-full aspect-square group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-black/60 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <span className="text-white text-lg font-semibold border-b-2 border-[#FFD700] pb-1">
+                      Learn More
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            </StaggerItem>
           ))}
-        </div>
+        </StaggerContainer>
       </section>
 
       {/* Pricing Section */}
@@ -215,7 +193,7 @@ export default function Home() {
               Choose the plan that fits your lifestyle
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+          <StaggerContainer className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
             {[
               {
                 name: "Basic",
@@ -257,7 +235,7 @@ export default function Home() {
                 popular: false,
               },
             ].map((plan, index) => (
-              <div
+              <StaggerItem
                 key={index}
                 className={`relative glass-card p-8 ${
                   plan.popular ? "border-2 border-[#FFD700] scale-105" : ""
@@ -296,9 +274,9 @@ export default function Home() {
                 >
                   Choose Plan
                 </button>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -313,14 +291,14 @@ export default function Home() {
               Expert coaches dedicated to your success
             </p>
           </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+          <StaggerContainer className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
             {[
               { name: "Mike Johnson", role: "Head Coach", specialty: "Strength & Conditioning", image: "/images/trainer-1.png" },
               { name: "Sarah Williams", role: "Senior Trainer", specialty: "CrossFit & HIIT", image: "/images/trainer-2.png" },
               { name: "David Chen", role: "Personal Trainer", specialty: "Weight Loss", image: "/images/trainer-1.png" },
               { name: "Emma Rodriguez", role: "Fitness Coach", specialty: "Yoga & Flexibility", image: "/images/trainer-2.png" },
             ].map((trainer, index) => (
-              <div key={index} className="group">
+              <StaggerItem key={index} className="group">
                 <div className="relative overflow-hidden rounded-2xl mb-4">
                   <Image
                     src={trainer.image}
@@ -336,9 +314,9 @@ export default function Home() {
                   </div>
                 </div>
                 <p className="text-gray-400 text-center">{trainer.specialty}</p>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
@@ -353,7 +331,7 @@ export default function Home() {
               Real stories from our community
             </p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <StaggerContainer className="grid md:grid-cols-3 gap-8">
             {[
               {
                 quote: "G8 Fitness completely transformed my life! The trainers are incredibly supportive and the facilities are top-notch. Best decision I ever made.",
@@ -371,7 +349,7 @@ export default function Home() {
                 role: "Member for 6 months",
               },
             ].map((testimonial, index) => (
-              <div key={index} className="glass-card p-8">
+              <StaggerItem key={index} className="glass-card p-8">
                 <div className="flex mb-4">
                   {[...Array(5)].map((_, i) => (
                     <svg key={i} className="w-5 h-5 text-[#FFD700]" fill="currentColor" viewBox="0 0 20 20">
@@ -384,9 +362,9 @@ export default function Home() {
                   <p className="font-semibold text-white">{testimonial.name}</p>
                   <p className="text-gray-500 text-sm">{testimonial.role}</p>
                 </div>
-              </div>
+              </StaggerItem>
             ))}
-          </div>
+          </StaggerContainer>
         </div>
       </section>
 
